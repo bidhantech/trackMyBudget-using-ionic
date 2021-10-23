@@ -1,0 +1,7 @@
+{
+  "name": "earnings-and-spendings-diary",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
