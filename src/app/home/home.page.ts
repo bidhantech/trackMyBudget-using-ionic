@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { DashboardData } from '../models/dashboard-data.model';
 import { Entry } from '../models/entry.model';
 import { StorageService } from '../services/storage.service';
 
@@ -12,6 +13,7 @@ import { StorageService } from '../services/storage.service';
 export class HomePage implements OnInit {
   public appTitle = 'Earnings Spendings Diary';
   private entries: Entry[];
+  private dashboardData: DashboardData;
   private showRecentEntriesList = true;
   private earningCategories = ['Salary', 'Investment Returns', 'Others'];
   private spendingCategories = ['Shopping', 'Groceries', 'Entertainment', 'Travel', 'Others'];
@@ -20,7 +22,7 @@ export class HomePage implements OnInit {
   private description: string;
   private category: string;
   private pageNumber = 1;
-  private itemPerPage = 5;
+  private itemPerPage = Number.POSITIVE_INFINITY;
   constructor(private activatedRoute: ActivatedRoute, private toastController: ToastController, private storageService: StorageService) { }
 
   ngOnInit(){
@@ -29,12 +31,24 @@ export class HomePage implements OnInit {
 
   syncEntries(){
     this.storageService.getEntries(this.pageNumber, this.itemPerPage).then(data => this.entries = data);
+    this.storageService.getDashboardData().then(data => this.dashboardData = data);
+  }
+
+  checkFormValidation(): boolean {
+    if(this.amount <= 0 || !this.description || !this.category){
+      return false;
+    }
+    return true;
   }
 
   saveEntry(): void {
+    if(!this.checkFormValidation()) {
+      return this.presentToast('Error', 'All fields are required!');
+    }
     const entry: Entry = {
       id: new Date().getTime() + '',
       description: this.description,
+      date: new Date().toString(),
       amount: this.amount,
       type: this.entryType,
       category: this.category,
@@ -42,18 +56,29 @@ export class HomePage implements OnInit {
     this.storageService.saveEntry(entry).then(() => {
      this.syncEntries();
     });
-    this.presentToast('Your entry has been saved.');
+    this.presentToast('Success', 'Your entry has been saved.');
     this.hideForm();
   }
 
-  presentToast(message: string) {
+  presentToast(header: string, message: string) {
     this.toastController.create({
+      header,
       message,
-      duration: 2000
+      position: 'bottom',
+      duration: 2000,
+      color: header === 'Error'? 'danger' : 'success'
     }).then((toast) => toast.present());
   }
 
+  resetForm(): void{
+    this.entryType = 'earning';
+    this.amount = 0;
+    this.category = null;
+    this.description = null;
+  }
+
   hideForm(): void {
+    this.resetForm();
     this.showRecentEntriesList = true;
   }
 

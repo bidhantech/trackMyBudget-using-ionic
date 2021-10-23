@@ -8,35 +8,56 @@
 </ion-header>
 
 <ion-content>
-  <section class="recent-entries-list" *ngIf="showRecentEntriesList">
-    <ion-list-header>
-      <ion-label>Recent entries</ion-label>
-    </ion-list-header>
-    <ion-list>
-      <ion-item>
-        <ion-label>Date</ion-label>
-        <ion-label>Description</ion-label>
-        <ion-label>Category</ion-label>
-        <ion-label>Amount</ion-label>
-      </ion-item>
-    </ion-list>
-    <ion-list *ngFor="let entry of entries">
-      <ion-item-sliding>
+  <section class="home-page" *ngIf="showRecentEntriesList">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Dashboard</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
         <ion-item>
-          <ion-label>11/10/21</ion-label>
-          <ion-label>{{ entry.description }}</ion-label>
-          <ion-label> {{ entry.category }} </ion-label>
-          <ion-label [color]="entry.type==='spending'?'danger':'success'">
-            <ion-icon name="arrow-down" *ngIf="entry.type==='spending'"></ion-icon>
-            <ion-icon name="arrow-up" *ngIf="entry.type==='earning'"></ion-icon>
-            {{ entry.amount }}
-          </ion-label>
+          <ion-label>Earnings</ion-label>
+          <ion-badge slot="end" color="success">{{ dashboardData?.totalEarnings }}</ion-badge>
         </ion-item>
-        <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="deleteItem(entry.id)">DELETE</ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
+        <ion-item>
+          <ion-label>Spendings</ion-label>
+          <ion-badge slot="end" color="danger">{{ dashboardData?.totalSpendings }}</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label>Available</ion-label>
+          <ion-badge slot="end" color="primary">{{ dashboardData?.totalAvailable }}</ion-badge>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <section>
+
+      <ion-list>
+        <ion-item>
+          <ion-label>Date</ion-label>
+          <ion-label>Reason</ion-label>
+          <ion-label>Category</ion-label>
+          <ion-label>Amount</ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngFor="let entry of entries">
+        <ion-item-sliding>
+          <ion-item>
+            <ion-label>{{ entry.date | date: 'd/M/yy' }}</ion-label>
+            <ion-label>{{ entry.description }}</ion-label>
+            <ion-label> {{ entry.category }} </ion-label>
+            <ion-label [color]="entry.type==='spending'?'danger':'success'">
+              <ion-icon name="arrow-down" *ngIf="entry.type==='spending'"></ion-icon>
+              <ion-icon name="arrow-up" *ngIf="entry.type==='earning'"></ion-icon>
+              {{ entry.amount }}
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="deleteItem(entry.id)">DELETE</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+
+      </ion-list>
+    </section>
   </section>
 
   <section class="add-expense-form" *ngIf="!showRecentEntriesList">
@@ -55,12 +76,14 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Category</ion-label>
-          <ion-select placeholder="Select {{ entryType }} category" [(ngModel)]="category" *ngIf="entryType==='earning'">
+          <ion-select placeholder="Select {{ entryType }} category" [(ngModel)]="category"
+            *ngIf="entryType==='earning'">
             <ion-select-option value="{{earningCategory}}" *ngFor="let earningCategory of earningCategories">
               {{ earningCategory | titlecase }}
             </ion-select-option>
           </ion-select>
-          <ion-select placeholder="Select {{ entryType }} category" [(ngModel)]="category" *ngIf="entryType==='spending'">
+          <ion-select placeholder="Select {{ entryType }} category" [(ngModel)]="category"
+            *ngIf="entryType==='spending'">
             <ion-select-option value="{{spendingCategory}}" *ngFor="let spendingCategory of spendingCategories">
               {{ spendingCategory | titlecase }}
             </ion-select-option>
