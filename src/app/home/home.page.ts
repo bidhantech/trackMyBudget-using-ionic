@@ -12,17 +12,17 @@ import { StorageService } from '../services/storage.service';
 })
 export class HomePage implements OnInit {
   public appTitle = 'Earnings Spendings Diary';
-  private entries: Entry[];
-  private dashboardData: DashboardData;
-  private showRecentEntriesList = true;
-  private earningCategories = ['Salary', 'Investment Returns', 'Others'];
-  private spendingCategories = ['Shopping', 'Groceries', 'Entertainment', 'Travel', 'Others'];
-  private entryType = 'earning';
-  private amount: number;
-  private description: string;
-  private category: string;
-  private pageNumber = 1;
-  private itemPerPage = Number.POSITIVE_INFINITY;
+  public entries: Entry[];
+  public dashboardData: DashboardData;
+  public showRecentEntriesList = true;
+  public earningCategories = ['Salary', 'Investment Returns', 'Others'];
+  public spendingCategories = ['Shopping', 'Groceries', 'Entertainment', 'Travel', 'Others'];
+  public entryType = 'earning';
+  public amount: number;
+  public description: string;
+  public category: string;
+  public pageNumber = 1;
+  public itemPerPage = Number.POSITIVE_INFINITY;
   constructor(private activatedRoute: ActivatedRoute, private toastController: ToastController, private storageService: StorageService) { }
 
   ngOnInit(){
