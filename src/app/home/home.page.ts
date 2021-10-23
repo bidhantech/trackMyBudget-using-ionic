@@ -11,7 +11,7 @@ import { StorageService } from '../services/storage.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  public appTitle = 'Earnings Spendings Diary';
+  public appTitle = 'trackMyBudget';
   public entries: Entry[];
   public dashboardData: DashboardData;
   public showRecentEntriesList = true;

@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'earnings-and-spendings-diary',
+  appName: 'trackMyBudget',
   webDir: 'www',
   bundledWebRuntime: false
 };
