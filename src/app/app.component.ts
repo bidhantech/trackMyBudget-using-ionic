@@ -11,6 +11,5 @@ export class AppComponent {
     { title: 'Analyse Spendings', url: '/graphs/spendings', icon: 'trending-down' },
     { title: 'About', url: '/about', icon: 'information-circle' }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor() {}
 }
