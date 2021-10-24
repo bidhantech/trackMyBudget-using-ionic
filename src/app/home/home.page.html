@@ -9,7 +9,7 @@
 
 <ion-content>
   <section class="home-page" *ngIf="showRecentEntriesList">
-    <ion-card>
+    <ion-card class="dashboard">
       <ion-card-header>
         <ion-card-title>Dashboard</ion-card-title>
       </ion-card-header>
@@ -23,7 +23,7 @@
           <ion-label>Spendings</ion-label>
           <ion-badge slot="end" color="danger">{{ dashboardData?.totalSpendings }}</ion-badge>
         </ion-item>
-        <ion-item>
+        <ion-item lines="none">
           <ion-label>Available</ion-label>
           <ion-badge slot="end" color="primary">{{ dashboardData?.totalAvailable }}</ion-badge>
         </ion-item>
@@ -40,7 +40,7 @@
         </ion-item>
       </ion-list>
       <ion-list *ngFor="let entry of entries">
-        <ion-item-sliding>
+        <ion-item-sliding (click)="presentModal(entry)">
           <ion-item>
             <ion-label>{{ entry.date | date: 'd/M/yy' }}</ion-label>
             <ion-label>{{ entry.description }}</ion-label>
@@ -69,7 +69,7 @@
       <ion-card-content>
         <ion-item>
           <ion-label position="floating">Type</ion-label>
-          <ion-select placeholder="Select entry type" [(ngModel)]="entryType">
+          <ion-select placeholder="Select entry type" [(ngModel)]="entryType" (click)="category=null">
             <ion-select-option value="earning" selected>Earning</ion-select-option>
             <ion-select-option value="spending">Spending</ion-select-option>
           </ion-select>

@@ -4,6 +4,8 @@ import { ToastController } from '@ionic/angular';
 import { DashboardData } from '../models/dashboard-data.model';
 import { Entry } from '../models/entry.model';
 import { StorageService } from '../services/storage.service';
+import { ModalController } from '@ionic/angular';
+import { ItemDetailsPage } from '../modals/item-details/item-details.page';
 
 @Component({
   selector: 'app-home',
@@ -15,34 +17,39 @@ export class HomePage implements OnInit {
   public entries: Entry[];
   public dashboardData: DashboardData;
   public showRecentEntriesList = true;
-  public earningCategories = ['Salary', 'Investment Returns', 'Others'];
-  public spendingCategories = ['Shopping', 'Groceries', 'Entertainment', 'Travel', 'Others'];
+  public earningCategories = ['Salary', 'Business', 'Gifts', 'Others'];
+  public spendingCategories = ['Shopping', 'Groceries', 'Food', 'Bills', 'Housing', 'Vehicle', 'Entertainment', 'Travel', 'Others'];
   public entryType = 'earning';
   public amount: number;
   public description: string;
   public category: string;
   public pageNumber = 1;
   public itemPerPage = Number.POSITIVE_INFINITY;
-  constructor(private activatedRoute: ActivatedRoute, private toastController: ToastController, private storageService: StorageService) { }
+  constructor(
+     private activatedRoute: ActivatedRoute,
+     private toastController: ToastController,
+     private storageService: StorageService,
+     public modalController: ModalController
+    ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.syncEntries();
   }
 
-  syncEntries(){
+  syncEntries() {
     this.storageService.getEntries(this.pageNumber, this.itemPerPage).then(data => this.entries = data);
     this.storageService.getDashboardData().then(data => this.dashboardData = data);
   }
 
   checkFormValidation(): boolean {
-    if(this.amount <= 0 || !this.description || !this.category){
+    if (this.amount <= 0 || !this.description || !this.category) {
       return false;
     }
     return true;
   }
 
   saveEntry(): void {
-    if(!this.checkFormValidation()) {
+    if (!this.checkFormValidation()) {
       return this.presentToast('Error', 'All fields are required!');
     }
     const entry: Entry = {
@@ -54,7 +61,7 @@ export class HomePage implements OnInit {
       category: this.category,
     };
     this.storageService.saveEntry(entry).then(() => {
-     this.syncEntries();
+      this.syncEntries();
     });
     this.presentToast('Success', 'Your entry has been saved.');
     this.hideForm();
@@ -66,13 +73,29 @@ export class HomePage implements OnInit {
       message,
       position: 'bottom',
       duration: 2000,
-      color: header === 'Error'? 'danger' : 'success'
+      color: header === 'Error' ? 'danger' : 'success'
     }).then((toast) => toast.present());
   }
 
-  resetForm(): void{
+  async presentModal(entry: Entry) {
+    const modal = await this.modalController.create({
+      component: ItemDetailsPage,
+      cssClass: 'my-custom-class',
+      componentProps: entry
+    });
+    modal.onDidDismiss().then((data) => {
+      // Call the method to do whatever in your home.ts
+         if(data.data.id && data.data.deleted){
+            this.deleteItem(data.data.id);
+         }
+      });
+    // modal.onDidDismiss(() => console.log('hi'));
+    return await modal.present();
+  }
+
+  resetForm(): void {
     this.entryType = 'earning';
-    this.amount = 0;
+    this.amount = null;
     this.category = null;
     this.description = null;
   }
@@ -83,7 +106,7 @@ export class HomePage implements OnInit {
   }
 
   deleteItem(id): void {
-    this.storageService.deleteEntryById(id).then(()=> {
+    this.storageService.deleteEntryById(id).then(() => {
       this.syncEntries();
     });
   }

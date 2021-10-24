@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item-group>
+    <ion-item>
+      <ion-label>Date: {{ date | date: 'd/M/y h:mm a' }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Type: {{ type | titlecase }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Category: {{ category }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Description: {{ description }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Amount: {{ amount }}</ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-button slot="start" color="danger" (click)="closeModal(true)">
+        DELETE
+        <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-item-group>
+</ion-content>
