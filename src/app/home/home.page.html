@@ -39,7 +39,7 @@
           <ion-label>Amount</ion-label>
         </ion-item>
       </ion-list>
-      <ion-list *ngFor="let entry of entries">
+      <ion-list *ngFor="let entry of entries" class="bt-cursor-pointer">
         <ion-item-sliding (click)="presentModal(entry)">
           <ion-item>
             <ion-label>{{ entry.date | date: 'd/M/yy' }}</ion-label>
