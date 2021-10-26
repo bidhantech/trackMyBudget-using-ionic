@@ -1,8 +1,8 @@
 {
   "name": "trackmybudget",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Bidhan Ghosh",
+  "homepage": "https://github.com/bidhantech",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -23,12 +23,11 @@
     "@capacitor/core": "3.2.5",
     "@capacitor/haptics": "1.1.2",
     "@capacitor/keyboard": "1.1.2",
+    "@capacitor/local-notifications": "^1.0.8",
     "@capacitor/status-bar": "1.0.5",
-    "@ionic-native/local-notifications": "^5.36.0",
     "@ionic-native/native-storage": "^5.36.0",
     "@ionic/angular": "^5.5.2",
     "@ionic/storage-angular": "^3.0.6",
-    "cordova-plugin-local-notification": "^0.9.0-beta.2",
     "cordova-plugin-nativestorage": "^2.3.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
@@ -68,5 +67,5 @@
     "ts-node": "~8.3.0",
     "typescript": "~4.2.4"
   },
-  "description": "An Ionic project"
+  "description": "An app to keep track of your budget!"
 }

@@ -6,7 +6,7 @@ import { Entry } from '../models/entry.model';
 import { StorageService } from '../services/storage.service';
 import { ModalController } from '@ionic/angular';
 import { ItemDetailsPage } from '../modals/item-details/item-details.page';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({
   selector: 'app-home',
@@ -30,8 +30,7 @@ export class HomePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController,
     private storageService: StorageService,
-    public modalController: ModalController,
-    private localNotifications: LocalNotifications
+    public modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -45,16 +44,19 @@ export class HomePage implements OnInit {
   }
 
   scheduleNotifications() {
-    this.localNotifications.schedule([{
-      id: new Date().getTime(),
-      text: 'Don\'t forget to add it to your diary!',
+    LocalNotifications.schedule({notifications: [{
+      id: 1,
+      body: 'Don\'t forget to keep track of your spending!',
       title: 'Spent money on something?',
-      trigger: { every: { hour: 20, minute: 45 } }
-    }, {
-      id: new Date().getTime(),
-      title: 'Don\'t forget to add it to your diary!',
-      text: 'Got salary?',
-    }]);
+      schedule: { every: 'hour', count: 5, allowWhileIdle: true }
+    },
+    {
+      id: 2,
+      body: 'Don\'t forget to keep track of your budget!',
+      title: 'Recieved your salary?',
+      schedule: { on: { day: 1, hour: 20 }, repeats: true, allowWhileIdle: true },
+    }
+  ]});
   }
 
   checkFormValidation(): boolean {
