@@ -6,6 +6,7 @@ import { Entry } from '../models/entry.model';
 import { StorageService } from '../services/storage.service';
 import { ModalController } from '@ionic/angular';
 import { ItemDetailsPage } from '../modals/item-details/item-details.page';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-home',
@@ -26,19 +27,34 @@ export class HomePage implements OnInit {
   public pageNumber = 1;
   public itemPerPage = Number.POSITIVE_INFINITY;
   constructor(
-     private activatedRoute: ActivatedRoute,
-     private toastController: ToastController,
-     private storageService: StorageService,
-     public modalController: ModalController
-    ) {}
+    private activatedRoute: ActivatedRoute,
+    private toastController: ToastController,
+    private storageService: StorageService,
+    public modalController: ModalController,
+    private localNotifications: LocalNotifications
+  ) { }
 
   ngOnInit() {
     this.syncEntries();
+    this.scheduleNotifications();
   }
 
   syncEntries() {
     this.storageService.getEntries(this.pageNumber, this.itemPerPage).then(data => this.entries = data);
     this.storageService.getDashboardData().then(data => this.dashboardData = data);
+  }
+
+  scheduleNotifications() {
+    this.localNotifications.schedule([{
+      id: new Date().getTime(),
+      text: 'Don\'t forget to add it to your diary!',
+      title: 'Spent money on something?',
+      trigger: { every: { hour: 20, minute: 45 } }
+    }, {
+      id: new Date().getTime(),
+      title: 'Don\'t forget to add it to your diary!',
+      text: 'Got salary?',
+    }]);
   }
 
   checkFormValidation(): boolean {
@@ -85,10 +101,10 @@ export class HomePage implements OnInit {
     });
     modal.onDidDismiss().then((data) => {
       // Call the method to do whatever in your home.ts
-         if(data.data.id && data.data.deleted){
-            this.deleteItem(data.data.id);
-         }
-      });
+      if (data.data.id && data.data.deleted) {
+        this.deleteItem(data.data.id);
+      }
+    });
     // modal.onDidDismiss(() => console.log('hi'));
     return await modal.present();
   }
