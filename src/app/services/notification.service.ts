@@ -31,7 +31,7 @@ export class NotificationService {
         body: 'Don\'t forget to keep track of your budget!',
         channelId: '101',
         title: 'Recieved your salary?',
-        schedule: { on: { minute: 12 }, repeats: true, allowWhileIdle: true },
+        schedule: { on: { day: 1 }, repeats: true, allowWhileIdle: true },
       }
     ]});
   }
