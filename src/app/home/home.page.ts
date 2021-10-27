@@ -18,8 +18,8 @@ export class HomePage implements OnInit {
   public entries: Entry[];
   public dashboardData: DashboardData;
   public showRecentEntriesList = true;
-  public earningCategories = ['Salary', 'Business', 'Gifts', 'Others'];
-  public spendingCategories = ['Shopping', 'Groceries', 'Food', 'Bills', 'Housing', 'Vehicle', 'Entertainment', 'Travel', 'Others'];
+  public earningCategories: string[];
+  public spendingCategories: string[];
   public entryType = 'earning';
   public amount: number;
   public description: string;
@@ -35,11 +35,13 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.syncEntries();
+    this.syncData();
     this.notificationService.scheduleNotification();
   }
 
-  syncEntries() {
+  syncData() {
+    this.earningCategories = this.storageService.getEarningCategories();
+    this.spendingCategories = this.storageService.getSpendingCategories();
     this.storageService.getEntries(this.pageNumber, this.itemPerPage).then(data => this.entries = data);
     this.storageService.getDashboardData().then(data => this.dashboardData = data);
   }
@@ -64,7 +66,7 @@ export class HomePage implements OnInit {
       category: this.category,
     };
     this.storageService.saveEntry(entry).then(() => {
-      this.syncEntries();
+      this.syncData();
     });
     this.presentToast('Success', 'Your entry has been saved.');
     this.hideForm();
@@ -110,7 +112,7 @@ export class HomePage implements OnInit {
 
   deleteItem(id): void {
     this.storageService.deleteEntryById(id).then(() => {
-      this.syncEntries();
+      this.syncData();
     });
   }
 }

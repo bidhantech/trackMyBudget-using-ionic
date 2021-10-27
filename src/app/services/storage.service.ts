@@ -75,4 +75,12 @@ export class StorageService {
     };
   }
 
+  getEarningCategories(): string[]{
+    return ['Salary', 'Business', 'Gifts', 'Others'];
+  }
+
+  getSpendingCategories(): string[]{
+    return ['Shopping', 'Groceries', 'Food', 'Bills', 'Housing', 'Vehicle', 'Entertainment', 'Travel', 'Others'];
+  }
+
 }
