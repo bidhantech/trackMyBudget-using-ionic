@@ -11,7 +11,7 @@ export class AboutPage{
     await Share.share({
       title: 'trackMyBudget - An app to track your budget!',
       text: 'Download trackMyBudget and get insights about your spending habits & control unnecessary spending.',
-      url: 'http://ionicframework.com/',
+      url: 'https://trackmybudget-ionic.netlify.app/',
       dialogTitle: 'Share with friends & family',
     });
   }
