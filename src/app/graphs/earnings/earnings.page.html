@@ -30,10 +30,9 @@
     </ion-segment>
 
     <div style="display: block;">
-      <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [colors]="pieChartColors"
+      <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [colors]="colors"
         [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
       </canvas>
-      <ion-item lines="none" class="bt-color-light"> Total: {{ grandTotalCategory }} </ion-item>
     </div>
   </section>
   <section class="history-chart">

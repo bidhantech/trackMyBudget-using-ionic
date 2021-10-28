@@ -42,7 +42,7 @@
       <ion-list *ngFor="let entry of entries" class="bt-cursor-pointer">
         <ion-item-sliding>
           <ion-item (click)="presentModal(entry)">
-            <ion-label>{{ entry.date | date: 'd/M/yy' }}</ion-label>
+            <ion-label>{{ entry.date | date: 'dd/MM/yy' }}</ion-label>
             <ion-label>{{ entry.description }}</ion-label>
             <ion-label> {{ entry.category }} </ion-label>
             <ion-label [color]="entry.type==='spending'?'danger':'success'">

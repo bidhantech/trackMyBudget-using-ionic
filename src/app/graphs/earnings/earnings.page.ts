@@ -15,6 +15,13 @@ export class EarningsPage implements OnInit {
   monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   public allTimeData;
   today = new Date();
+  public colors = [
+    {
+      backgroundColor: ['rgb(255, 20, 100)',
+        'rgb(55, 152, 205)',
+        'rgb(255, 200, 90)'],
+    },
+  ];
 
   // category
   public fromDateForCategoryGraph: Date;
@@ -25,13 +32,6 @@ export class EarningsPage implements OnInit {
   public pieChartData: SingleDataSet = [];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
-  public pieChartColors = [
-    {
-      backgroundColor: ['rgb(255, 20, 100)',
-        'rgb(55, 152, 205)',
-        'rgb(255, 200, 90)'],
-    },
-  ];
   public pieChartPlugins = [];
   public grandTotalCategory = 0;
 
@@ -99,8 +99,11 @@ export class EarningsPage implements OnInit {
     const filteredByDateData = this.allTimeData.filter(item => new Date(item.date) >= this.fromDateForHistoryBarChart);
 
     // map over categories & construct the inner data of dataset object per catagory
-    this.earningCategories.map(category => {
-      const innerDataSetObj = { label: category, stack: 'single', data: [] };
+    this.earningCategories.map((category, categoryIndex) => {
+      const innerDataSetObj = { label: category,
+                                stack: 'single',
+                                data: [],
+                                backgroundColor: this.colors[0].backgroundColor[categoryIndex] };
       const data = {};
       filteredByDateData.forEach(item => {
         const itemMonth = this.monthNames[new Date(item.date).getMonth()];

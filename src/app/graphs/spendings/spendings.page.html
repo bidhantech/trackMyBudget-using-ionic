@@ -8,10 +8,62 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label>
-      Coming soon...
-    </ion-label>
-  </ion-item>
+  <section class="category-chart">
+    <ion-item-divider >
+      <ion-label>
+        <h6 class="ion-margin">Spendings By Category</h6>
+      </ion-label>
+    </ion-item-divider>
+    <ion-segment scrollable (ionChange)="changeCatergoryTimePeriod($event)" value="1" color="primary">
+      <ion-segment-button value="1">
+        <ion-label>Current Month</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="3">
+        <ion-label>Last 3 Month</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="6">
+        <ion-label>Last 6 Months</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="12">
+        <ion-label>Last 12 Months</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div style="display: block;">
+      <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [colors]="colors"
+        [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+      </canvas>
+    </div>
+  </section>
+  <section class="history-chart">
+    <ion-item-divider>
+      <ion-label>
+        <h6 class="ion-margin">Spendings History</h6>
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-segment scrollable (ionChange)="changeHistoryTimePeriod($event)" value="3" color="primary">
+      <ion-segment-button value="3">
+        <ion-label>Last 3 Month</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="6">
+        <ion-label>Last 6 Months</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="12">
+        <ion-label>Last 12 Months</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div style="display: block;">
+      <canvas baseChart 
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [plugins]="barChartPlugins"
+      [legend]="barChartLegend"
+      [chartType]="barChartType">
+    </canvas>
+    </div>
+  </section>
 
 </ion-content>
