@@ -21,7 +21,7 @@ export class SpendingsPage implements OnInit {
       backgroundColor: [
         'rgb(255, 20, 100)',
         'rgb(55, 152, 205)',
-        'rgb(255, 200, 90)',
+        'rgb(0, 180, 0)',
         'rgb(255, 0, 250)',
         'rgb(55, 102, 205)',
         'rgb(255, 200, 0)',
