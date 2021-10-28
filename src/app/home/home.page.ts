@@ -7,8 +7,6 @@ import { StorageService } from '../services/storage.service';
 import { ModalController } from '@ionic/angular';
 import { ItemDetailsPage } from '../modals/item-details/item-details.page';
 import { NotificationService } from '../services/notification.service';
-import { StoreRateService } from '../services/store-rate.service';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -33,14 +31,12 @@ export class HomePage implements OnInit {
     private toastController: ToastController,
     private storageService: StorageService,
     private notificationService: NotificationService,
-    private storeRate: StoreRateService,
     public modalController: ModalController
   ) { }
 
   ngOnInit() {
     this.syncData();
     this.notificationService.scheduleNotification();
-    this.storeRate.rate();
   }
 
   syncData() {
