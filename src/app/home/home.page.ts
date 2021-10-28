@@ -20,6 +20,7 @@ export class HomePage implements OnInit {
   public showRecentEntriesList = true;
   public earningCategories: string[];
   public spendingCategories: string[];
+  public date = new Date().toISOString();
   public entryType = 'earning';
   public amount: number;
   public description: string;
@@ -60,7 +61,7 @@ export class HomePage implements OnInit {
     const entry: Entry = {
       id: new Date().getTime() + '',
       description: this.description,
-      date: new Date().toString(),
+      date: this.date.toString(),
       amount: this.amount,
       type: this.entryType,
       category: this.category,
