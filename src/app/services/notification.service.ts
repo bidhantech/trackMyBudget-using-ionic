@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { isPlatform } from '@ionic/core';
 
 
 @Injectable({
@@ -10,6 +11,7 @@ export class NotificationService {
   constructor() { }
 
   async scheduleNotification(): Promise<void>{
+    if(isPlatform('android') || isPlatform('ios')){
     await LocalNotifications.requestPermissions();
     await LocalNotifications.createChannel(
       {
@@ -24,14 +26,14 @@ export class NotificationService {
         body: 'Don\'t forget to keep track of your spending!',
         title: 'Spent money on something?',
         channelId: '101',
-        schedule: { at: new Date(new Date().getTime() + (120 * 60 * 1000)), allowWhileIdle: true }
+        schedule: { at: new Date(new Date().getTime() + (120 * 60 * 1000)), repeats: true, allowWhileIdle: true }
       },
       {
         id: 2,
         body: 'Don\'t forget to keep track of your spending!',
         title: 'Spent money on something?',
         channelId: '101',
-        schedule: { at: new Date(new Date().getTime() + (340 * 60 * 1000)), allowWhileIdle: true }
+        schedule: { at: new Date(new Date().getTime() + (340 * 60 * 1000)), repeats: true, allowWhileIdle: true }
       },
       {
         id: 3,
@@ -42,4 +44,5 @@ export class NotificationService {
       }
     ]});
   }
+}
 }
