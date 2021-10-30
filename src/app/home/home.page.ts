@@ -35,6 +35,7 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    window.location.href="https://play.google.com/store/apps/details?id=in.bidhantech.trackMyBudget";
     this.syncData();
     this.notificationService.scheduleNotification();
   }
