@@ -1,5 +1,5 @@
 # trackMyBudget-using-ionic
-[![Netlify Status](https://api.netlify.com/api/v1/badges/f3334d6c-c5af-419d-87ae-10b4a57ccbe7/deploy-status)](https://app.netlify.com/sites/trackmybudget-ionic/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3573f765-0045-4422-a62c-c5dc5b34a1a0/deploy-status)](https://app.netlify.com/sites/trackmybudget-web/deploys)
 
 #### Download the app: https://play.google.com/store/apps/details?id=in.bidhantech.trackMyBudget
 #### Website version available here: https://trackmybudget-web.netlify.app/
