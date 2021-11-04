@@ -15,6 +15,7 @@ import { NotificationService } from '../services/notification.service';
 export class HomePage implements OnInit {
   public appTitle = 'trackMyBudget';
   public entries: Entry[];
+  public totalEntriesCount = 0;
   public dashboardData: DashboardData;
   public showRecentEntriesList = true;
   public earningCategories: string[];
@@ -42,7 +43,10 @@ export class HomePage implements OnInit {
   syncData() {
     this.earningCategories = this.storageService.getEarningCategories();
     this.spendingCategories = this.storageService.getSpendingCategories();
-    this.storageService.getEntries(this.pageNumber, this.itemPerPage).then(data => this.entries = data);
+    this.storageService.getEntries(this.pageNumber, this.itemPerPage).then(data => {
+      this.entries = data;
+      this.totalEntriesCount = this.entries.length;
+    });
     this.storageService.getDashboardData().then(data => this.dashboardData = data);
   }
 

@@ -39,6 +39,7 @@
           <ion-label>Amount</ion-label>
         </ion-item>
       </ion-list>
+      <section class="entries-list-no-data" *ngIf="totalEntriesCount === 0">Please add new entries.</section>
       <ion-list *ngFor="let entry of entries" class="bt-cursor-pointer">
         <ion-item-sliding>
           <ion-item (click)="presentModal(entry)">
